@@ -27,11 +27,11 @@ end
 class Store
   validates :name, length: { minimum: 3 }
   validates :annual_revenue, numericality: { only_integer: true, greater_than: 0 }
-  # def no_apparel
-  #   if record.mens_apparel == false && record.womens_apparel == false
-  #     errors.add("One of the apparels must be true")
-  #   end
-  # end
+  def no_apparel
+    if record.mens_apparel == false && record.womens_apparel == false
+      errors.add("One of the apparels must be true")
+    end
+  end
 
   # def validate(record)
   #   if record.mens_apparel == false && record.womens_apparel == false
@@ -48,8 +48,11 @@ end
 # Store.create(name: store)
 surrey = Store.create(name: "S", annual_revenue: 224000, mens_apparel: false, womens_apparel: false)
 asdf = Store.create(name: "asdf")
-puts surrey.errors.full_messages
-puts asdf.errors.full_messages
+if surrey.errors.any?
+  surrey.errors.full_messages.each {|msg| puts msg}
+end
+# puts surrey.errors.full_messages
+# puts asdf.errors.full_messages
 
 # Add validations to two models to enforce the following business rules:
 # Employees must always have a first name present
