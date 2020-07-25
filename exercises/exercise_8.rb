@@ -11,7 +11,7 @@ puts "Exercise 8"
 puts "----------"
 
 class Employee
-  after_create :set_password
+  before_create :set_password
 
   private
     def set_password
