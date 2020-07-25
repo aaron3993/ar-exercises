@@ -11,6 +11,18 @@ require_relative './exercise_8'
 puts "Exercise 9"
 puts "----------"
 
+class Store
+  before_destroy :no_destroy
+
+  private
+    def no_destroy
+      if self.employees.count > 0
+        errors.add(:base, "Cannot delete store with 1 or more employees")
+        return false
+      end
+    end
+end
+
 # Make sure non-empty stores cannot be destroyed
 @store1 = Store.find(1)
 if @store1.destroy

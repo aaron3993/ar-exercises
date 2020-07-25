@@ -17,7 +17,7 @@ end
 class Store
   include ActiveModel::Validations
   validates :name, length: { minimum: 3 }
-  validates :annual_revenue, numericality: { only_integer: true, greater_than: 0 }
+  validates :annual_revenue, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validate :no_apparel
   
   def no_apparel
