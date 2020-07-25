@@ -15,17 +15,23 @@ class Employee
 end
 
 class Store
+  include ActiveModel::Validations
   validates :name, length: { minimum: 3 }
-  validates :annual_revenue, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :annual_revenue, numericality: { only_integer: true, greater_than: 0 }
+  validate :no_apparel
+  
   def no_apparel
-    if record.mens_apparel == false && record.womens_apparel == false
-      errors.add("One of the apparels must be true")
+    if mens_apparel == false && womens_apparel == false
+      errors.add(:base, "One of the apparels must be true")
     end
   end
 end
 
-surrey = Store.create(name: "S", annual_revenue: 224000, mens_apparel: false, womens_apparel: false)
+surrey = Store.create(name: "Sas", annual_revenue: 224000, mens_apparel: false, womens_apparel: false)
 asdf = Store.create(name: "asdf")
 if surrey.errors.any?
   surrey.errors.full_messages.each {|msg| puts msg}
+end
+if asdf.errors.any?
+  asdf.errors.full_messages.each {|msg| puts msg}
 end
